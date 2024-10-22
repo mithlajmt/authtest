@@ -1,0 +1,117 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full mx-auto space-y-8">
+      <!-- Header -->
+      <div class="text-center">
+        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+          Create your account
+        </h2>
+        <p class="mt-2 text-sm text-gray-600">
+          Join our learning platform
+        </p>
+      </div>
+  
+      <!-- Registration Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
+        <div class="rounded-md shadow-sm space-y-4">
+          <!-- Name Input -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">
+              Full Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              [class.border-red-500]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+              aria-invalid="true"
+              placeholder="Enter your full name"
+            />
+            <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.hasError('required')" class="text-red-500 text-sm mt-1">
+              Name is required
+            </div>
+            <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.hasError('minlength')" class="text-red-500 text-sm mt-1">
+              Name must be at least 3 characters long
+            </div>
+          </div>
+  
+          <!-- Email Input -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              [class.border-red-500]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              aria-invalid="true"
+              placeholder="Enter your email"
+            />
+            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')" class="text-red-500 text-sm mt-1">
+              Email is required
+            </div>
+            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')" class="text-red-500 text-sm mt-1">
+              Please enter a valid email
+            </div>
+          </div>
+  
+          <!-- Mobile Input -->
+          <div>
+            <label for="mobile" class="block text-sm font-medium text-gray-700">
+              Mobile Number
+            </label>
+            <input
+              id="mobile"
+              type="tel"
+              formControlName="mobile"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              [class.border-red-500]="registerForm.get('mobile')?.invalid && registerForm.get('mobile')?.touched"
+              aria-invalid="true"
+              placeholder="Enter your mobile number"
+            />
+            <div *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('required')" class="text-red-500 text-sm mt-1">
+              Mobile number is required
+            </div>
+            <div *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('pattern')" class="text-red-500 text-sm mt-1">
+              Please enter a valid 10-digit mobile number
+            </div>
+          </div>
+  
+          <!-- User Type Dropdown -->
+          <div>
+            <label for="user_type" class="block text-sm font-medium text-gray-700">
+              User Type
+            </label>
+            <select
+              id="user_type"
+              formControlName="user_type"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              [class.border-red-500]="registerForm.get('user_type')?.invalid && registerForm.get('user_type')?.touched"
+              aria-invalid="true"
+            >
+              <option value="">Select user type</option>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
+            <div *ngIf="registerForm.get('user_type')?.touched && registerForm.get('user_type')?.hasError('required')" class="text-red-500 text-sm mt-1">
+              Please select a user type
+            </div>
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            [disabled]="!registerForm.valid"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
