@@ -49,7 +49,7 @@
           <!-- Course Content -->
           <div class="p-5 space-y-3">
             <h2 class="text-lg font-semibold text-gray-900 line-clamp-2">{{ course.title }}</h2>
-            <p class="text-sm text-gray-600 line-clamp-3">{{course.description}}</p>
+            <p class="text-sm text-gray-600 line-clamp-3" [innerHTML]="course.description"></p>
             
             <!-- Price and Action -->
             <div class="flex items-center justify-between pt-3">
