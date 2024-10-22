@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  registerApi:string = 'https://testing.competitivecracker.com/api/v1/user/register'
+  private registerApi:string = 'https://testing.competitivecracker.com/api/v1/user/register'
+  private loginApi:string = 'https://testing.competitivecracker.com/api/v1/user/login'
+
 
   constructor(
     private http: HttpClient,
@@ -13,5 +15,8 @@ export class AuthService {
 
   registerUser(user: any) {
     return this.http.post(this.registerApi, user);
+  }
+  userlogin(user:any){
+    return this.http.post(this.loginApi,user);
   }
 }
