@@ -152,7 +152,7 @@
         </div>
 
         <!-- Submit Button -->
-        <div>
+        <div class="space-y-4">
           <button
             type="submit"
             [disabled]="!registerForm.valid"
@@ -162,6 +162,17 @@
             <svg *ngIf="registerForm.valid" class="ml-2 -mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
+          </button>
+
+          <!-- Login Link -->
+          <button class="text-center" (click)="navigate()" >
+            <span class="text-sm text-gray-600">Already have an account? </span>
+            <a 
+              routerLink="/auth/login"
+              class="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors duration-300"
+            >
+              log in
+            </a>
           </button>
         </div>
       </form>

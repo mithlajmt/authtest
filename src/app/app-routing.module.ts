@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from './modules/shared/notfound/notfound.component';
+import { Token } from '@angular/compiler';
+import { LoginGuard } from './guards/login.guard';
+import { TokenGuard } from './guards/token.guard';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: () => import('./modules/auth/auth-routing.module').then(m => m.AuthRoutingModule) },
+  { path: 'auth',canActivate:[TokenGuard], loadChildren: () => import('./modules/auth/auth-routing.module').then(m => m.AuthRoutingModule) },
+  { path: 'user', canActivate:[LoginGuard], loadChildren: () => import('./modules/user/user-routing.module').then(m => m.UserRoutingModule) },
   { path: '', redirectTo: 'auth/register', pathMatch: 'full' }, // Optional: Redirect to register or default route
   { path: '**', component: NotfoundComponent } // Wildcard route for handling 404 pages
 ];

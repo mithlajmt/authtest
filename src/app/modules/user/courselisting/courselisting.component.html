@@ -1,0 +1,99 @@
+<div class="min-h-screen bg-gray-50 p-8">
+    <div class="max-w-7xl mx-auto space-y-8">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl font-bold text-gray-900">Explore Our Courses</h1>
+        <p class="mt-2 text-gray-600">Discover the perfect course to advance your skills</p>
+      </div>
+  
+      <!-- Search and Filter Bar -->
+      <div class="bg-white p-4 rounded-lg shadow-sm space-y-4 md:space-y-0 md:flex md:items-center md:justify-between">
+        <!-- Search Input -->
+        <div class="md:w-1/2">
+          <input
+            type="text"
+            placeholder="Search courses..."
+            class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150"
+            (input)="onSearchChange($event)"
+          />
+        </div>
+  
+        <!-- Category Dropdown -->
+        <div class="md:w-1/4">
+          <select
+            class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150"
+            (change)="onCategoryChange($event)"
+          >
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Loading State -->
+      <!-- <div *ngIf="loading" class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      </div> -->
+  
+      <!-- Course Grid -->
+      <div *ngIf="!loading && courses.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div *ngFor="let course of courses" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+          <!-- Course Image -->
+          <div class="relative">
+            <img [src]="course.cover" alt="{{ course.title }}" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 m-2 px-2 py-1 bg-blue-500 text-white text-sm rounded-lg">
+              New
+            </div>
+          </div>
+          
+          <!-- Course Content -->
+          <div class="p-5 space-y-3">
+            <h2 class="text-lg font-semibold text-gray-900 line-clamp-2">{{ course.title }}</h2>
+            <p class="text-sm text-gray-600 line-clamp-3">{{course.description}}</p>
+            
+            <!-- Price and Action -->
+            <div class="flex items-center justify-between pt-3">
+              <p class="text-xl font-bold text-blue-600">₹{{ course.price_incl_gst }}</p>
+              <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-150">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Empty State -->
+      <div *ngIf="!loading && courses.length === 0" class="text-center py-12">
+        <div class="text-gray-400 mb-4">
+          <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01"></path>
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900">No Courses Found</h3>
+        <p class="mt-2 text-gray-600">Try adjusting your search or filter to find what you're looking for.</p>
+      </div>
+  
+      <!-- Pagination -->
+      <div class="flex justify-center items-center space-x-2 py-6">
+        <button 
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+          (click)="prevPage()"
+          [disabled]="reqbody.current_page === 1"
+        >
+          Previous
+        </button>
+  
+        <span class="px-4 py-2 bg-blue-50 border border-blue-100 rounded-lg text-blue-600 font-medium">
+          {{ reqbody.current_page }} / {{ totalPages }}
+        </span>
+  
+        <button 
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+          (click)="nextPage()"
+          [disabled]="reqbody.current_page === totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { LoadingService } from 'src/app/services/loading.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,7 +30,9 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authserv:AuthService,
-    private router:Router
+    private router:Router,
+    private loading:LoadingService,
+    private toastr: ToastrService
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -56,24 +60,36 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  navigate(){
+    this.router.navigate(['auth/login']);
+  }
+
   onSubmit() {
+    this.loading.show(); // Show loading spinner
     if (this.registerForm.valid) {
+
+
       // Trim inputs to avoid leading/trailing spaces before submission
       const formData = {
         ...this.registerForm.value,
         name: this.registerForm.value.name.trim(),
         email: this.registerForm.value.email.trim(),
         mobile: this.registerForm.value.mobile.trim(),
-        device:'mobile',
+        device:navigator.userAgent
 
       };
         this.authserv.registerUser(formData).subscribe({
           next: (response) => {
             console.log('Registration successful:', response);
             this.router.navigate(['auth/login']);
+            this.loading.hide(); // Hide loading spinner
+            this.toastr.success('Registration Successful', 'Success');
           },
           error: (error) => {
             console.error('Error registering user:', error);
+            this.loading.hide(); // Hide loading spinner
+            this.toastr.error('Registration Failer', 'Error');
+            alert('Registration failed')
           }
         }) 
      }
